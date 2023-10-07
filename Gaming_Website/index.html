@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <meta name="author" content="Gordon Tan" />
+
+    <title>The Final Fantasy 9 Gamer Zone</title>
+    <link rel="stylesheet" href="myStyleSheet.css" type="text/css" />
+  </head>
+  <body>
+    <header></header>
+    <div class="navbar">
+      <ul>
+        <a class="active" href="#home">Home</a>
+        <a href="info.html">Info</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="about.html">About</a>
+      </ul>
+    </div>
+
+    <div class="website-header">
+      <h2>The Final Fantasy 9 Gamer Zone</h2>
+      <p>
+        A very dedicated fan website to discussing Final Fantasy 9 and providing some in-depth
+        insight into the game
+      </p>
+      <img src="gamingLogoS.png" alt="Gaming Logo" />
+    </div>
+    <div class="bodyContent">
+      <h2>Brief Description</h2>
+      <p>
+        Final Fantasy 9 is a fantasy jrpg turn based game published by Square where you play as the
+        thief Zidane with a plot surrounding Garnet the princess of Alexandria and tons of
+        fascinating political intrigue at play. It is the 9th game in the series franchise and one
+        of the very best there is. You'll meet memorable characters along the way who will join your
+        party and travel through a variety of interesting landscapes while engaging in combat with
+        enemies.
+      </p>
+      <h2>Game Trailer</h2>
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/V9GMKshn0Ck"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+      <h2>Screenshots</h2>
+      <div class="imageGameContainer">
+        <div class="imageWithCaption">
+          <figure>
+            <img
+              src="https://www.rpgfan.com/wp-content/uploads/2020/07/Final-Fantasy-IX-Screenshot-037.jpg"
+              alt="screenshot"
+            />
+            <figcaption>In-Combat screenshot</figcaption>
+          </figure>
+        </div>
+        <div class="imageWithCaption">
+          <figure>
+            <img
+              src=" https://www.rpgfan.com/wp-content/uploads/2020/07/Final-Fantasy-IX-Screenshot-06.jpg."
+              alt="screenshot"
+            />
+            <figcaption>Menu screenshot</figcaption>
+          </figure>
+        </div>
+
+        <div class="imageWithCaption">
+          <figure>
+            <img
+              src=" https://www.rpgfan.com/wp-content/uploads/2020/07/Final-Fantasy-IX-Screenshot-025.jpg"
+              alt="screenshot"
+            />
+            <figcaption>Regular world screenshot</figcaption>
+          </figure>
+        </div>
+      </div>
+      <br />
+      <p>
+        You can find a navigation bar at the top that allows you to travel to different pages of
+        website. There's an about page which contains a bio about myself and why this game was
+        chosen with citations. An info page which will give you a more detailed information about
+        the game and general tips. The main page here has the newsletter sign-up subscription and
+        there's also a reviews page where you can see what others thought about the game and scored
+        it. You can even add your own review if you want to, to the list of reviews there.
+      </p>
+
+      <hr />
+
+      <div class="footer">
+        <h5>Newsletter Subscription</h5>
+        <span>Please provide a valid email format (valid@mail.com)</span>
+        <form action="https://httpbin.org/post" method="post" id="webform" onsubmit="return false">
+          <label for="email">Email:</label>
+          <input
+          name="email"
+            type="email"
+            id="emailBox"
+            required
+            pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+          />
+          <input name="myName" type="hidden" id="lname" value="Gordon" /><br /><br />
+          <input type="submit" value="Sign-up" onclick="successfulSignUp()"/>
+        </form>
+      </div>
+    </div>
+    <script src="./mainPageApp.js"></script>
+  </body>
+</html>

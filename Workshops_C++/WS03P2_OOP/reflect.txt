@@ -1,0 +1,18 @@
+///////////////////////////////////////////////////////////////////////////
+
+                              Reflection
+                             Workshop - #3
+Full Name  : Gordon Tan
+Student ID#: 147206221
+Email      : gtan16@myseneca.ca
+Section    : NAA
+Date: June-3rd-2023
+
+Authenticity Declaration:
+
+I declare this submission is the result of my own work and has not been
+shared with any other student or 3rd party content provider. This submitted
+piece of work is entirely of my own creation.
+///////////////////////////////////////////////////////////////////////////
+
+In this workshop it was about implementing a class and some design with privacy and member functions. By making these variables private in the class we are encapsulating the data better and not exposing everything to the client. It’s not a good idea for variables of a class to be directly accessed so they shouldn’t be public or global and you only allow access to them indirectly through member functions with setters and getters. It can be quite useful to do it this way, because you can perform some error handling and checking beforehand in case invalid values are placed in before actually processing anything. Member functions benefit from having access to all data members of the class so you don’t even need to pass those into the function through parameters. Some functions in this workshop don’t really need to be exposed to the main program either so you can make them private as well. You can handle initialization of an object with a function of the class and set it to a safe empty state so there isn’t undefined behaviour later that could break things in the program. It becomes easy to check an object’s state. I also learned about how to do formatting of output I print to the console and had to tinker around with it a bit to see how to get it just right. That was probably the part where I had a bit of challenge there. 

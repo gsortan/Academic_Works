@@ -1,0 +1,18 @@
+///////////////////////////////////////////////////////////////////////////
+
+                              Reflection
+                             Workshop - #4
+Full Name  : Gordon Tan
+Student ID#: 147206221
+Email      : gtan16@myseneca.ca
+Section    : NAA
+Date: June-10th-2023
+
+Authenticity Declaration:
+
+I declare this submission is the result of my own work and has not been
+shared with any other student or 3rd party content provider. This submitted
+piece of work is entirely of my own creation.
+///////////////////////////////////////////////////////////////////////////
+
+Constructors are pretty helpful in that they can provide easy initialization for any objects we create. We do not need to have a separate function as a result to set some default values for a safe empty state after an object is created with the constructor. Not only that, but you can have more robust and convenient flexibility with the data and what you want to do by having different constructors with different parameters in each one. Destructors are another tool, that is good for cleaning up any dynamically allocated memory that’s created with the new keyword for any pointers. Destructors are also called automatically when the object’s time is up, so it’s much easier to keep track of deallocations and so that you don’t forget to do that, creating less work. Forgetting to delete a pointer would cause a an undesired memory leak which can cause issues later down the road. Finally, there’s the this keyword, which can be used to get a reference of the current object. You can avoid naming conflicts by using the this pointer and can easily pass the current object to a member function if you need to do that. 

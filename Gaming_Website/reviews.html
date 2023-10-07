@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <meta name="author" content="Gordon Tan" />
+
+    <title>The Final Fantasy 9 Gamer Zone</title>
+
+    <link rel="stylesheet" href="./myStyleSheet.css" type="text/css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <ul>
+          <a href="index.html">Home</a>
+          <a href="info.html">Info</a>
+          <a class="active" href="reviews.html">Reviews</a>
+          <a href="about.html">About</a>
+        </ul>
+      </div>
+    </header>
+
+    <div class="website-header">
+      <h2>The Final Fantasy 9 Gamer Zone</h2>
+      <p>
+        A very dedicated fan website to discussing Final Fantasy 9 and providing some in-depth
+        insight into the game
+      </p>
+      <img src="gamingLogoS.png" alt="Gaming Logo" />
+    </div>
+    <div class="bodyContent">
+      <h2>Reviews</h2>
+    </div>
+    <main id="reviewPage"></main>
+    <div class="footerReviewForm">
+      <h5>Review form</h5>
+      <form class="postReview" id="post">
+        <label for="name">Name:</label>
+        <input class="postReview" type="text" id="name" name="name" required /><br />
+        <label for="rating:">Rating:</label>
+        <input
+          class="postReview"
+          type="number"
+          min="1"
+          max="5"
+          id="rating"
+          name="rating"
+          required
+        />
+        <span>Has to be a 1-5 number for the star rating</span>
+        <br />
+        <label for="review">Review:</label>
+        <textarea
+          class="postReview"
+          id="postReview"
+          name="GameReview"
+          rows="7"
+          cols="69"
+          maxlength = "552"
+          placeholder="Write a review here for the game"
+          required
+        ></textarea>
+        <br />
+        <input type="submit" value="Create" />
+      </form>
+    </div>
+    <!-- JavaScript Data Files -->
+
+    <script src="./data.js"></script>
+
+    <!-- Main App JavaScript File -->
+    <script src="./app.js"></script>
+  </body>
+</html>

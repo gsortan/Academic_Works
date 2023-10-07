@@ -1,0 +1,261 @@
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.navbar a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.rateReviewContainer
+{
+  width: 500px;
+  height: 285px;
+  overflow-wrap: break-word;
+  font-size: 23px;
+}
+
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.navbar a.active {
+  background-color: #07abf7;
+  color: white;
+}
+
+textarea {
+  width: 100%;
+}
+
+.imageGameContainer {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+ol 
+{
+  font-family: "Teko";
+  font-size: 30px;
+}
+
+ol li::marker {
+  color: rgb(9, 247, 104);
+}
+
+.footerReviewForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #1d7484;
+  max-height: 500px;
+}
+
+span {
+  color: #fafafa;
+}
+
+label {
+  color: #fafafa;
+}
+
+.RateBar {
+  margin-top: -30px;
+}
+
+.imageWithCaption {
+  margin-bottom: 0;
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.imageWithCaption figcaption {
+  background-color: #222;
+  color: #fff;
+  font: "Teko";
+  width: auto;
+  margin-top: -12px;
+}
+
+.image {
+  width: 10%;
+  text-align: center;
+}
+
+.cardHeader {
+  background-color: rgb(9, 247, 104);
+  border-radius: 5px;
+  font-size: 30px;
+  overflow-wrap: break-word;
+  
+}
+
+.cardHeader h6 {
+  margin: 0;
+}
+
+.card {
+  border: #333;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #f1f1f1;
+  width: 500px;
+  margin: 30px;
+}
+
+#emailBox:valid:focus {
+  background-color: ivory;
+  outline: 2px solid  rgb(9, 247, 104);
+}
+
+#emailBox:invalid:focus {
+  background-color: ivory;
+  outline: 2px solid red;
+}
+
+.ratingContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bodyContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #9e9a9a;
+  color: rgba(246, 240, 240, 0.881);
+  text-align: center;
+  align-items: center;
+}
+
+.footer {
+  background-color: #1d7484;
+  width: 100%;
+  min-height: 300px;
+  max-height: 300px;
+}
+
+html {
+  font-family: "Teko";
+  font-size: 65.5%;
+}
+
+.website-header p {
+  margin: 0px;
+}
+
+.website-header h2 {
+  margin: 0px;
+}
+
+.website-header {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: #1d7484;
+  font-size: 30px;
+  margin: 0px;
+  align-items: center;
+  color: rgb(9, 247, 104);
+}
+
+#reviewPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.8rem;
+  line-height: 1.618;
+  color: #4a4a4a;
+  background-color: #9e9a9a;
+  margin: 0px;
+}
+
+@font-face {
+  font-family: "Handjet";
+  src: url("./Handjet-VariableFont_ELGR,ELSH,wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Teko";
+  src: url("./Teko-Regular.ttf") format("truetype");
+}
+
+h1 {
+  font-size: 2.35em;
+  text-align: center;
+  color: rgb(9, 247, 104);
+  font-family: "Handjet";
+}
+
+h2 {
+  font-size: 2em;
+  font-family: "Handjet";
+  color: rgb(9, 247, 104);
+  background-color: #410106;
+  width: 100%;
+}
+
+h5 {
+  font-size: 1.25em;
+  font-family: "Handjet";
+  color: rgb(9, 247, 104);
+}
+
+p {
+  margin-top: 0px;
+  margin-bottom: 2.5rem;
+  font-family: "Teko";
+  font-size: 30px;
+}
+
+
+input[type="submit"] {
+  text-align: center;
+  background-color: rgb(9, 247, 104);
+  color: black;
+  border-radius: 5px;
+  height: 40px;
+  width: 100px;
+  border: black;
+  cursor: pointer;
+  font-family: "Teko";
+  font-size:20px;
+}
+
+input[type="submit"][disabled]{
+  cursor: default;
+  opacity: 0.5;
+}
+
+input[type="submit"]:active {
+  background-color: rgb(9, 247, 104);
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  background-color: red;
+  border: none;
+  outline: 0;
+}
+
+
+
