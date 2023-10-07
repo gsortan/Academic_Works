@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Cg Shaders">
+      <UniqueIdentifier>{eb1cddbf-5187-4ac5-bf0b-1abe480cbd6a}</UniqueIdentifier>
+      <Extensions>.cg</Extensions>
+    </Filter>
+    <Filter Include="Header Files\3D Objects">
+      <UniqueIdentifier>{b7c19015-d3d3-49ec-ad56-23ff030c8dd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3D Objects">
+      <UniqueIdentifier>{56c47618-c851-4a4e-9b1b-76b0ac1744e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{d0285469-0939-45de-9ee4-f943077ac730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\2D Objects">
+      <UniqueIdentifier>{3e0377d4-795c-4f8d-aec8-44f3bbb05a4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{002d3bd6-3983-4b8d-933c-315b6fe17294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\2D Objects">
+      <UniqueIdentifier>{74774f9c-0dba-4d73-bfe8-98e4f224d5e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Misc">
+      <UniqueIdentifier>{9d625875-adfa-4824-b9db-120c1fbc2dfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc">
+      <UniqueIdentifier>{f8839054-f3b4-43ea-acbc-c916859cb6b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effects">
+      <UniqueIdentifier>{3d7d95d8-8a7c-4d54-b14f-32e0e4dc9487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Effects">
+      <UniqueIdentifier>{fdf32a1f-d632-425b-9c75-8200ad9d2118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cg Shaders\Fragment">
+      <UniqueIdentifier>{b4bb0784-9ae6-4539-8164-ceb52d5b508c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cg Shaders\Vertex">
+      <UniqueIdentifier>{df56a33c-86c2-43eb-9dc4-50d02bd6e087}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{0d137001-ea37-481e-8464-f9af25f494ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{6471dbb6-ed93-4e63-b01c-d5535c9cf7ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gordon">
+      <UniqueIdentifier>{56d98276-6d93-4c1e-98a1-58fdd82c6916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gordon">
+      <UniqueIdentifier>{f6685e23-a454-4f65-851a-5e8c4f695437}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inline Files">
+      <UniqueIdentifier>{881b8f50-4d0b-4618-a821-55ee442b99c9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files\3D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3f.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files\2D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsWindow.cpp">
+      <Filter>Source Files\2D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\2D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="FBO.cpp">
+      <Filter>Source Files\2D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Quad.cpp">
+      <Filter>Source Files\3D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>Source Files\3D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Bone.cpp">
+      <Filter>Source Files\3D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files\2D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Conversion.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Skin.cpp">
+      <Filter>Source Files\3D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files\3D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\3D Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Path.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="AIstate.cpp">
+      <Filter>Source Files\Gordon</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviour.cpp">
+      <Filter>Source Files\Gordon</Filter>
+    </ClCompile>
+    <ClCompile Include="Cg.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="animationPlayer.cpp">
+      <Filter>Source Files\Gordon</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files\3D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3f.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files\2D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsWindow.h">
+      <Filter>Header Files\2D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Include.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\2D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FBO.h">
+      <Filter>Header Files\2D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Quad.h">
+      <Filter>Header Files\3D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>Header Files\3D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Bone.h">
+      <Filter>Header Files\3D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Header Files\2D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Conversion.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Skin.h">
+      <Filter>Header Files\3D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files\3D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\3D Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="AIstate.h">
+      <Filter>Header Files\Gordon</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviour.h">
+      <Filter>Header Files\Gordon</Filter>
+    </ClInclude>
+    <ClInclude Include="Cg.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="animationPlayer.h">
+      <Filter>Header Files\Gordon</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NGenesis.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Fragment_Blur.cg">
+      <Filter>Cg Shaders\Fragment</Filter>
+    </None>
+    <None Include="Fragment_Easy.cg">
+      <Filter>Cg Shaders\Fragment</Filter>
+    </None>
+    <None Include="Fragment_Medium.cg">
+      <Filter>Cg Shaders\Fragment</Filter>
+    </None>
+    <None Include="Vertex_Blur.cg">
+      <Filter>Cg Shaders\Vertex</Filter>
+    </None>
+    <None Include="Vertex_Easy.cg">
+      <Filter>Cg Shaders\Vertex</Filter>
+    </None>
+    <None Include="Vertex_Medium.cg">
+      <Filter>Cg Shaders\Vertex</Filter>
+    </None>
+    <None Include="GPU_Skinning.cg">
+      <Filter>Cg Shaders\Vertex</Filter>
+    </None>
+    <None Include="icon2.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Vertex_Shadow.cg">
+      <Filter>Cg Shaders\Vertex</Filter>
+    </None>
+    <None Include="Fragment_Shadow.cg">
+      <Filter>Cg Shaders\Fragment</Filter>
+    </None>
+    <None Include="Vector3f.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Include\fmod\lib\fmodex_vc.lib" />
+  </ItemGroup>
+</Project>

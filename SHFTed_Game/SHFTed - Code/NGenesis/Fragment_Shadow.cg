@@ -1,0 +1,62 @@
+struct fInput
+{
+	float2 texCoord		: TEXCOORD0;
+	float3 normal		: TEXCOORD1;
+	float3 position		: TEXCOORD2;
+	float4 shadowCoord  : TEXCOORD4;
+};
+
+struct fOutput
+{
+	float4 color : COLOR;
+};
+
+fOutput fShadow(fInput IN,   
+                uniform sampler2D shadowMap : TEX0,
+                uniform float3 lightPosition,
+				uniform float3 lightColor,
+				uniform float3 eyePosition,
+				uniform float3 kd,
+				uniform float3 ks,
+				uniform float3 ka,
+				uniform float3 ke,
+				uniform float3 globalAmbient,
+				uniform float shininess)
+{
+    fOutput OUT;
+
+    float3 P = IN.position.xyz;
+	float3 N = IN.normal;
+	
+	//Compute Emissive
+	float3 emissive = ke;
+	
+	//Compute Ambient
+	float3 ambient = ka * globalAmbient;
+	
+	//Compute Diffuse Lighting
+	float3 L = normalize(lightPosition - P);
+	float diffuseLight = max(dot(N, L), 0);
+	float3 diffuse = kd * lightColor * diffuseLight;
+	
+	//Compute Specular lighting
+	float3 V = normalize(eyePosition - P);
+	float3 H = normalize(V + L);
+	float specularLight = pow(max(dot(N, H), 0), shininess);
+	
+	float3 specular = ks * lightColor * specularLight;
+    
+	//Does perspective division on fragment position and compares depth to shadow map
+	float shadowCoeff = 0;
+	float4 shadowFrag = IN.shadowCoord.xyz / IN.shadowCoord.w
+	float depth = tex2D(shadowMap, shadowFrag.xy).z;
+
+	if (shadowCoord.w > 0.0)
+		shadowCoeff = depth < shadowPixel.z ? 0.25 : 1.0;
+
+	OUT.color.xyz = ((diffuse + specular) * shadowCoeff) + ambient + emissive;
+	OUT.color.w = 1;
+
+	return OUT;
+}
+

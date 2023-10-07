@@ -1,0 +1,375 @@
+//Simple fragment shaders that are pretty much just base effects
+//There may be a few here that are combinations of base effects, but theyre fundamental
+
+struct fragment //Fragment shader. Fragments store color only
+{
+	float4 color : COLOR;
+};
+
+fragment fColor(fragment IN)
+{
+	fragment OUT;
+
+	OUT.color = IN.color;
+
+	return OUT;
+}
+
+fragment fTextureReplace(fragment IN,
+				  uniform sampler2D decal0 : TEX0, 
+				  float2 texCoord0 : TEXCOORD0)
+{
+	fragment OUT;
+
+	OUT.color.xyz = tex2D(decal0, texCoord0).xyz;
+	OUT.color.w = 1;
+	
+	return OUT;
+}
+
+fragment fTextureModulate(fragment IN,
+						  uniform sampler2D decal0 : TEX0,
+						  float2 texCoord0 : TEXCOORD0)
+{
+	fragment OUT;
+
+	OUT.color = IN.color * tex2D(decal0, texCoord0);
+
+
+	return OUT;
+}
+
+fragment fLightingGoochWithShadow(fragment IN,
+
+								  float3 texCoord0 : TEXCOORD0,
+								  float3 texCoord1 : TEXCOORD1,
+								  float3 texCoord2 : TEXCOORD2,
+								  //float3 tangent : TEXCOORD3,
+								  //float3 bitangent : TEXCOORD4,
+								  float4 shadowCoord : TEXCOORD4,
+
+								  uniform sampler2D decal0 : TEXUNIT0,
+								  uniform sampler2D shadowMap : TEXUNIT1,
+
+								  //uniform float3 playerPos,
+
+								  uniform float3 globalAmbient,
+								  uniform float3 lightColor, 
+								  uniform float3 lightPosition, 
+								  uniform float3 eyePosition,
+								  uniform float3 ke, 
+								  uniform float3 ka, 
+								  uniform float3 ks, 
+								  uniform float3 kd, 
+								  uniform float shininess,
+
+								  uniform float4 statusColour,
+								  uniform float globalIntensity,
+					   
+								  uniform float offset)
+{
+	fragment OUT;
+
+	float3 P = texCoord2.xyz; //TexCoord2 is now position
+	float3 N = normalize(texCoord1); //TexCoord1 is now normals
+
+	float3 emissive = ke;
+	float3 ambient = ka * globalAmbient;
+	float3 L = normalize(lightPosition - P);
+
+	//float3x3 tangentSpace;
+	//tangentSpace[0] = tangent;
+	//tangentSpace[1] = bitangent;
+	//tangentSpace[2] = N;
+
+	//float3 Ltangent = mul(tangentSpace, L);
+
+	//float diffuseLight = max(dot(N, Ltangent), 0); //Clamping it so it's between 0 and 1
+	float diffuseLight = max(dot(N, L), 0); //Clamping it so it's between 0 and 1
+	float3 diffuse = kd * lightColor * diffuseLight;
+	float3 V = normalize(eyePosition - P);
+	float3 H = normalize(L + V);
+
+	//float3 Htangent = mul(tangentSpace, H);
+
+	//float specularLight = pow(max(dot(N, Htangent), 0), shininess);
+	float specularLight = pow(max(dot(N, H), 0), shininess);
+
+	if (diffuseLight <= 0)
+	{
+		specularLight = 0;
+	}
+
+	float3 specular = ks * lightColor * specularLight;
+	//OUT.color.xyz = emissive + ambient + (diffuse + specular) * (1 / distance(lightPosition, P));
+	//OUT.color.xyz = emissive + ambient + (diffuse + specular);
+	//OUT.color.xyz = specular;
+
+	//OUT.color.w = 1;
+
+	//float3 surfaceColor = (0.75, 0.75, 0.75);
+	float3 coolColor = (0.0, 0.0, 0.9); //BRANAN LOOK AT THIS
+	float3 warmColor = (0.9, 0.9, 0.0);
+
+	float diffuseWarm = 0.80;
+	float diffuseCool = 0.50;
+
+	texCoord0.x += offset;
+
+	//float4 textureColor = tex2D(shadowMap, texCoord0);
+	float4 textureColor = tex2D(decal0, texCoord0);
+
+	float shadowCoeff = 1;
+
+	if (distance(P, lightPosition) < 350) //Only shadows if youre close enough
+	{
+		//Does perspective division on fragment position and compares depth to shadow map. SHADOW
+		shadowCoord += float4(0, -10, 0, 0);
+		float4 shadowFrag = shadowCoord / shadowCoord.w;
+		float depth = tex2D(shadowMap, shadowFrag.xy).z;
+
+		if (shadowCoord.w > 0)
+		{
+			shadowCoeff = depth < shadowFrag.z ? 0.25 : 1.0;
+		}
+	}
+
+	/*if (shadowFrag.z > depth)
+	{
+		shadowCoeff = 0.3;
+	}*/
+
+	/*if (shadowCoord.w >= 0.0)
+		shadowCoeff = depth < shadowFrag.z ? 0.25 : 1.0; //Condition ? TRUE : FALSE*/
+
+	//OUT.color.xyz = ((diffuse + specular) * shadowCoeff) + ambient + emissive;
+	//OUT.color.xyz *= textureColor;
+	//OUT.color.w = 1;
+	//
+
+	//GOOCH
+	float3 kCool = coolColor * (diffuseCool * diffuse) * textureColor.xyz;
+	float3 kWarm = warmColor * (diffuseWarm * diffuse) * textureColor.xyz;
+	float3 kFinal = ((1 + dot(N, L)) / 2) * kCool + (1 - ((1 + dot(N, L)) / 2)) * kWarm + (specular * 0.5);	
+
+	OUT.color.xyz = lerp(kFinal, textureColor.xyz, 0.7);
+	OUT.color.xyz *= statusColour.xyz * globalIntensity * shadowCoeff;
+	OUT.color.w = textureColor.w;
+	//
+
+	//OUT.color.xyz = tex2D(shadowMap, texCoord0).xyz;
+
+	return OUT;
+}
+
+fragment fLightingGooch(fragment IN,
+
+					   float3 texCoord0 : TEXCOORD0,
+					   float3 texCoord1 : TEXCOORD1,
+					   float3 texCoord2 : TEXCOORD2,
+					   //float3 tangent : TEXCOORD3,
+					   //float3 bitangent : TEXCOORD4,
+					   float4 shadowCoord : TEXCOORD4,
+
+					   uniform sampler2D decal0 : TEX0,
+
+					   uniform float3 globalAmbient,
+					   uniform float3 lightColor, 
+					   uniform float3 lightPosition, 
+					   uniform float3 eyePosition,
+					   uniform float3 ke, 
+					   uniform float3 ka, 
+					   uniform float3 ks, 
+					   uniform float3 kd, 
+					   uniform float shininess,
+
+					   uniform float4 statusColour,
+					   uniform float globalIntensity,
+					   
+					   uniform float offset)
+{
+	fragment OUT;
+
+	float3 P = texCoord2.xyz; //TexCoord2 is now position
+	float3 N = normalize(texCoord1); //TexCoord1 is now normals
+
+	float3 emissive = ke;
+	float3 ambient = ka * globalAmbient;
+	float3 L = normalize(lightPosition - P);
+
+	shadowCoord = shadowCoord;
+
+	//float3x3 tangentSpace;
+	//tangentSpace[0] = tangent;
+	//tangentSpace[1] = bitangent;
+	//tangentSpace[2] = N;
+
+	//float3 Ltangent = mul(tangentSpace, L);
+
+	//float diffuseLight = max(dot(N, Ltangent), 0); //Clamping it so it's between 0 and 1
+	float diffuseLight = max(dot(N, L), 0); //Clamping it so it's between 0 and 1
+	float3 diffuse = kd * lightColor * diffuseLight;
+	float3 V = normalize(eyePosition - P);
+	float3 H = normalize(L + V);
+
+	//float3 Htangent = mul(tangentSpace, H);
+
+	//float specularLight = pow(max(dot(N, Htangent), 0), shininess);
+	float specularLight = pow(max(dot(N, H), 0), shininess);
+
+	if (diffuseLight <= 0)
+	{
+		specularLight = 0;
+	}
+
+	float3 specular = ks * lightColor * specularLight;
+	//OUT.color.xyz = emissive + ambient + (diffuse + specular) * (1 / distance(lightPosition, P));
+	//OUT.color.xyz = emissive + ambient + (diffuse + specular);
+	//OUT.color.xyz = specular;
+
+	//OUT.color.w = 1;
+
+	//float3 surfaceColor = (0.75, 0.75, 0.75);
+	float3 coolColor = (0.0, 0.0, 0.9); //BRANAN LOOK AT THIS
+	float3 warmColor = (0.9, 0.9, 0.0);
+
+	float diffuseWarm = 0.80;
+	float diffuseCool = 0.50;
+
+	texCoord0.x += offset;
+
+	float4 textureColor = tex2D(decal0, texCoord0);
+
+	float3 kCool = coolColor * (diffuseCool * diffuse) * textureColor.xyz;
+	float3 kWarm = warmColor * (diffuseWarm * diffuse) * textureColor.xyz;
+	float3 kFinal = ((1 + dot(N, L)) / 2) * kCool + (1 - ((1 + dot(N, L)) / 2)) * kWarm + (specular * 0.5);	
+
+	OUT.color.xyz = lerp(kFinal, textureColor.xyz, 0.7);
+	OUT.color.xyz *= statusColour.xyz * globalIntensity;
+	OUT.color.w = textureColor.w;
+
+	return OUT;
+}
+
+fragment fLighting(fragment IN,
+
+					float3 texCoord0 : TEXCOORD0,
+					float3 texCoord1 : TEXCOORD1,
+					float3 texCoord2 : TEXCOORD2,
+					float3 tangent : TEXCOORD3,
+					float3 bitangent : TEXCOORD4,
+
+					uniform sampler2D decal0 : TEX0,
+
+					uniform float3 globalAmbient, 
+					uniform float3 lightColor, 
+					uniform float3 lightPosition, 
+					uniform float3 eyePosition,
+					uniform float3 ke, 
+					uniform float3 ka, 
+					uniform float3 ks, 
+					uniform float3 kd, 
+					uniform float shininess,
+					
+					uniform float offset)
+{
+	fragment OUT;
+
+	float3 P = texCoord2.xyz; //TexCoord2 is now position
+	float3 N = normalize(texCoord1); //TexCoord1 is now normals
+
+	float3 emissive = ke;
+	float3 ambient = ka * globalAmbient;
+	float3 L = normalize(lightPosition - P);
+
+	float3x3 tangentSpace;
+	tangentSpace[0] = tangent;
+	tangentSpace[1] = bitangent;
+	tangentSpace[2] = N;
+
+	float3 Ltangent = mul(tangentSpace, L);
+
+	//float diffuseLight = max(dot(N, Ltangent), 0); //Clamping it so it's between 0 and 1
+	float diffuseLight = max(dot(N, L), 0); //Clamping it so it's between 0 and 1
+	float3 diffuse = kd * lightColor * diffuseLight;
+	float3 V = normalize(eyePosition - P);
+	float3 H = normalize(L + V);
+
+	float3 Htangent = mul(tangentSpace, H);
+
+	//float specularLight = pow(max(dot(N, Htangent), 0), shininess);
+	float specularLight = pow(max(dot(N, H), 0), shininess);
+
+	if (diffuseLight <= 0)
+	{
+		specularLight = 0;
+	}
+
+	float3 specular = ks * lightColor * specularLight;
+	//OUT.color.xyz = emissive + ambient + (diffuse + specular) * (1 / distance(lightPosition, P));
+	OUT.color.xyz = emissive + ambient + (diffuse + specular);
+	//OUT.color.xyz = specular;
+
+	OUT.color.w = 1;
+
+	texCoord0.x += offset;
+
+	OUT.color *= tex2D(decal0, texCoord0);
+
+	//OUT.color.xyz = IN.color;
+	//OUT.color.xyz = kFinal;
+
+	return OUT;
+}
+
+fragment fMultiTexture(fragment IN,
+
+					   uniform bool on0,
+					   uniform bool on1,
+					   uniform bool on2,
+					   uniform bool on3,
+
+					   uniform sampler2D decal0 : TEXUNIT0, 
+					   uniform sampler2D decal1 : TEXUNIT1,
+					   uniform sampler2D decal2 : TEXUNIT2,
+					   uniform sampler2D decal3 : TEXUNIT3,
+
+					   float2 texCoord0 : TEXCOORD0,
+					   float2 texCoord1 : TEXCOORD1,
+					   float2 texCoord2 : TEXCOORD2,
+					   float2 texCoord3 : TEXCOORD3)
+{
+	fragment OUT;
+
+	float numActive = 0;
+	float3 texColor;
+
+	OUT.color = IN.color;
+
+	float4 tex1 = tex2D(decal0, texCoord0);
+	float4 tex2 = tex2D(decal1, texCoord0);
+	float4 tex3 = tex2D(decal2, texCoord0);
+	float4 tex4 = tex2D(decal3, texCoord0);
+
+	if (on0 == true && tex1.w != 0)
+	{
+		OUT.color = lerp(OUT.color, tex1, 0.5);
+	}
+
+	if (on1 == true && tex2.w != 0)
+	{
+		OUT.color = lerp(OUT.color, tex2, 0.5);
+	}
+	
+	if (on2 == true && tex3.w != 0)
+	{
+		OUT.color = lerp(OUT.color, tex3, 0.5);
+	}
+
+	if (on3 == true && tex4.w != 0)
+	{
+		OUT.color = lerp(OUT.color, tex4, 0.5);
+	}
+
+	return OUT;
+}

@@ -1,0 +1,341 @@
+//Simple vertex shaders that are pretty much just base effects
+//There may be a few here that are combinations of base effects, but theyre fundamental
+
+//Homogeneous Matrix transformations
+//http://fgiesen.wordpress.com/2011/05/04/row-major-vs-column-major-and-gl-es/
+
+struct vertex //Vertixes can store a lot of information such as position, color, texture and normal
+{
+	float4 position : POSITION; //In the form dataType varName : semantic
+	float4 color : COLOR; //Semantics are like. Theyre telling the GPU that this is for this specific attributes
+
+	float3 texCoord0 : TEXCOORD0;
+	float3 texCoord1 : TEXCOORD1;
+	float3 texCoord2 : TEXCOORD2;
+	float3 texCoord3 : TEXCOORD3;
+	float4 texCoord4 : TEXCOORD4;
+};
+
+vertex vColor(vertex IN,
+			  uniform float4x4 modelViewMatrix,
+			  uniform float4 newColor,
+			  uniform float4 rotationRow0,
+			  uniform float4 rotationRow1,
+			  uniform float4 rotationRow2)
+{
+	vertex OUT;
+
+	OUT.position.x = rotationRow0.x * IN.position.x + rotationRow0.y * IN.position.y + rotationRow0.z * IN.position.z + rotationRow0.w * IN.position.w;
+	OUT.position.y = rotationRow1.x * IN.position.x + rotationRow1.y * IN.position.y + rotationRow1.z * IN.position.z + rotationRow1.w * IN.position.w;
+	OUT.position.z = rotationRow2.x * IN.position.x + rotationRow2.y * IN.position.y + rotationRow2.z * IN.position.z + rotationRow2.w * IN.position.w;
+	OUT.position.w = 1;
+
+	OUT.position = mul(modelViewMatrix, OUT.position);
+
+	OUT.color = newColor;
+	OUT.texCoord0 = IN.texCoord0;
+	OUT.texCoord1 = IN.texCoord1;
+	OUT.texCoord2 = IN.texCoord2;
+	OUT.texCoord3 = IN.texCoord3;
+	OUT.texCoord4 = IN.texCoord4;
+
+	return OUT;
+}
+
+vertex vDisplacementMap(vertex IN, 
+						uniform float4x4 modelViewMatrix,
+						uniform float4 newColor,
+						uniform float4 rotationRow0,
+						uniform float4 rotationRow1,
+						uniform float4 rotationRow2,
+						uniform sampler2D decal0 : TEX0)
+{
+	vertex OUT;
+
+	OUT.position.x = rotationRow0.x * IN.position.x + rotationRow0.y * IN.position.y + rotationRow0.z * IN.position.z + rotationRow0.w * IN.position.w;
+	OUT.position.y = rotationRow1.x * IN.position.x + rotationRow1.y * IN.position.y + rotationRow1.z * IN.position.z + rotationRow1.w * IN.position.w;
+	OUT.position.z = rotationRow2.x * IN.position.x + rotationRow2.y * IN.position.y + rotationRow2.z * IN.position.z + rotationRow2.w * IN.position.w;
+	OUT.position.w = 1;
+
+	OUT.position = mul(modelViewMatrix, OUT.position);
+
+	OUT.color = newColor;
+	OUT.texCoord0 = IN.texCoord0;
+	OUT.texCoord1 = IN.texCoord1;
+	OUT.texCoord2 = IN.texCoord2;
+	OUT.texCoord3 = IN.texCoord3;
+	OUT.texCoord4 = IN.texCoord4;
+
+	return OUT;
+}
+
+vertex vLighting(vertex IN, 
+				uniform float4x4 modelViewMatrix,
+
+				uniform float4 newColor,
+				uniform float4 rotationRow0,
+				uniform float4 rotationRow1,
+				uniform float4 rotationRow2,
+
+				float3 normal : NORMAL,
+							
+				uniform float3 globalAmbient, 
+				uniform float3 lightColor, 
+				uniform float3 lightPosition, 
+				uniform float3 eyePosition,
+				uniform float3 ke, 
+				uniform float3 ka, 
+				uniform float3 ks, 
+				uniform float3 kd, 
+				uniform float shininess)
+{
+	vertex OUT;
+
+	OUT.position.x = rotationRow0.x * IN.position.x + rotationRow0.y * IN.position.y + rotationRow0.z * IN.position.z + rotationRow0.w * IN.position.w;
+	OUT.position.y = rotationRow1.x * IN.position.x + rotationRow1.y * IN.position.y + rotationRow1.z * IN.position.z + rotationRow1.w * IN.position.w;
+	OUT.position.z = rotationRow2.x * IN.position.x + rotationRow2.y * IN.position.y + rotationRow2.z * IN.position.z + rotationRow2.w * IN.position.w;
+	OUT.position.w = 1;
+
+	float3 P = OUT.position.xyz;
+	float3 N = normalize(normal);
+	float3 emissive = ke;
+	float3 ambient = ka * globalAmbient;
+	float3 L = normalize(lightPosition - P);
+	float diffuseLight = max(dot(N, L), 0);
+	float3 diffuse = kd * lightColor * diffuseLight;
+	float3 V = normalize(eyePosition - P);
+	float3 H = normalize(L + V);
+	float specularLight = pow(max(dot(N, H), 0), shininess);
+
+	if (diffuseLight <= 0)
+	{
+		specularLight = 0;
+	}
+
+	float3 specular = ks * lightColor * specularLight;
+	OUT.color.xyz = emissive + ambient + (diffuse + specular) * (1 / distance(lightPosition, P) / 0.1);
+	OUT.color.w = 1;
+	OUT.color *= newColor;
+
+	OUT.texCoord0 = IN.texCoord0;
+	OUT.texCoord1 = IN.texCoord1;
+	OUT.texCoord2 = IN.texCoord2;
+	OUT.texCoord3 = IN.texCoord3;
+	OUT.texCoord4 = IN.texCoord4;
+
+	OUT.position = mul(modelViewMatrix, OUT.position);
+
+	return OUT;
+}
+
+vertex vFragLighting(vertex IN, 
+					float3 normal : NORMAL,
+					float3 tangent : TEXCOORD5,
+					float3 bitangent : TEXCOORD6,
+					uniform float4 rotationRow0,
+					uniform float4 rotationRow1,
+					uniform float4 rotationRow2,
+					uniform float4x4 modelViewMatrix,
+					uniform float4 newColor)
+{
+	vertex OUT;
+
+	OUT.position.x = rotationRow0.x * IN.position.x + rotationRow0.y * IN.position.y + rotationRow0.z * IN.position.z + rotationRow0.w * IN.position.w;
+	OUT.position.y = rotationRow1.x * IN.position.x + rotationRow1.y * IN.position.y + rotationRow1.z * IN.position.z + rotationRow1.w * IN.position.w;
+	OUT.position.z = rotationRow2.x * IN.position.x + rotationRow2.y * IN.position.y + rotationRow2.z * IN.position.z + rotationRow2.w * IN.position.w;
+	OUT.position.w = 1;	
+
+	//OUT.texCoord0 = normal;
+	//OUT.texCoord1 = OUT.position.xyz;
+
+	OUT.texCoord0 = IN.texCoord0;
+	//OUT.texCoord1 = normal;
+
+	OUT.texCoord1.x = rotationRow0.x * normal.x + rotationRow0.y * normal.y + rotationRow0.z * normal.z;
+	OUT.texCoord1.y = rotationRow1.x * normal.x + rotationRow1.y * normal.y + rotationRow1.z * normal.z;
+	OUT.texCoord1.z = rotationRow2.x * normal.x + rotationRow2.y * normal.y + rotationRow2.z * normal.z;
+
+	OUT.texCoord2 = OUT.position.xyz;
+	//OUT.texCoord3 = tangent;
+	//OUT.texCoord4 = bitangent;
+
+	OUT.color.xyz = OUT.texCoord1;
+
+	OUT.position = mul(modelViewMatrix, OUT.position);
+
+	return OUT;
+}
+
+vertex vFragLightingShadow(vertex IN, //Used for objects which shadows are going to fall upon
+						   float3 normal : NORMAL,
+						   //float3 tangent : TEXCOORD5,
+						   //float3 bitangent : TEXCOORD6,
+						   uniform float4 rotationRow0,
+						   uniform float4 rotationRow1,
+						   uniform float4 rotationRow2,
+						   uniform float4x4 modelViewMatrix,
+						   uniform float4x4 textureMatrix,
+						   uniform float4x4 lightViewMatrix,
+						   uniform float4 newColor)
+{
+	vertex OUT;
+
+	OUT.position.x = rotationRow0.x * IN.position.x + rotationRow0.y * IN.position.y + rotationRow0.z * IN.position.z + rotationRow0.w * IN.position.w;
+	OUT.position.y = rotationRow1.x * IN.position.x + rotationRow1.y * IN.position.y + rotationRow1.z * IN.position.z + rotationRow1.w * IN.position.w;
+	OUT.position.z = rotationRow2.x * IN.position.x + rotationRow2.y * IN.position.y + rotationRow2.z * IN.position.z + rotationRow2.w * IN.position.w;
+	OUT.position.w = 1;	
+
+	//OUT.texCoord0 = normal;
+	//OUT.texCoord1 = OUT.position.xyz;
+
+	OUT.texCoord0 = IN.texCoord0;
+	//OUT.texCoord1 = normal;
+
+	OUT.texCoord1.x = rotationRow0.x * normal.x + rotationRow0.y * normal.y + rotationRow0.z * normal.z;
+	OUT.texCoord1.y = rotationRow1.x * normal.x + rotationRow1.y * normal.y + rotationRow1.z * normal.z;
+	OUT.texCoord1.z = rotationRow2.x * normal.x + rotationRow2.y * normal.y + rotationRow2.z * normal.z;
+
+	OUT.texCoord2 = OUT.position.xyz;
+
+	OUT.color.xyz = OUT.texCoord1;
+
+	OUT.position = mul(modelViewMatrix, OUT.position);
+	textureMatrix = mul(textureMatrix, lightViewMatrix);
+	OUT.texCoord4 = mul(textureMatrix, IN.position);
+
+	return OUT;
+}
+
+vertex vFragLightingWithNormalMap(vertex IN, 
+								  uniform sampler2D decal1 : TEX1,
+								  float3 tangent : TEXCOORD5,
+								  float3 bitangent : TEXCOORD6,
+								  uniform float4 rotationRow0,
+								  uniform float4 rotationRow1,
+								  uniform float4 rotationRow2,
+								  uniform float4x4 modelViewMatrix,
+								  uniform float4 newColor)
+{
+	vertex OUT;
+
+	OUT.position.x = rotationRow0.x * IN.position.x + rotationRow0.y * IN.position.y + rotationRow0.z * IN.position.z + rotationRow0.w * IN.position.w;
+	OUT.position.y = rotationRow1.x * IN.position.x + rotationRow1.y * IN.position.y + rotationRow1.z * IN.position.z + rotationRow1.w * IN.position.w;
+	OUT.position.z = rotationRow2.x * IN.position.x + rotationRow2.y * IN.position.y + rotationRow2.z * IN.position.z + rotationRow2.w * IN.position.w;
+	OUT.position.w = 1;
+
+	OUT.texCoord0 = IN.texCoord0;
+
+	float4 normal = tex2D(decal1, IN.texCoord0);
+
+	OUT.texCoord1.x = rotationRow0.x * normal.x + rotationRow0.y * normal.y + rotationRow0.z * normal.z;
+	OUT.texCoord1.y = rotationRow1.x * normal.x + rotationRow1.y * normal.y + rotationRow1.z * normal.z;
+	OUT.texCoord1.z = rotationRow2.x * normal.x + rotationRow2.y * normal.y + rotationRow2.z * normal.z;
+
+	OUT.texCoord2 = OUT.position.xyz;
+	//OUT.texCoord3 = tangent;
+	//OUT.texCoord4 = bitangent;
+
+	OUT.color.xyz = OUT.texCoord1;
+
+	OUT.position = mul(modelViewMatrix, OUT.position);
+
+	return OUT;
+}
+
+vertex vParticle(vertex IN,
+			     uniform float4x4 modelViewMatrix,
+			     uniform float4 newColor,
+			     uniform float3 translation,
+				 uniform float4 rotationRow0,
+				 uniform float4 rotationRow1,
+				 uniform float4 rotationRow2,
+			     uniform float3 velocity,
+			     uniform float3 acceleration,
+				 uniform float t)
+{
+	vertex OUT;
+
+	translation = translation + velocity * t + 0.5 * acceleration * t * t;
+
+	OUT.position.xyz = IN.position.xyz + translation.xyz;
+	OUT.position.w = 1;
+	OUT.position = mul(modelViewMatrix, OUT.position);
+
+	OUT.color = newColor;
+	OUT.texCoord0 = IN.texCoord0;
+	OUT.texCoord1 = IN.texCoord1;
+	OUT.texCoord2 = IN.texCoord2;
+	OUT.texCoord3 = IN.texCoord3;
+	OUT.texCoord4 = IN.texCoord4;
+
+	return OUT;
+}
+
+/*vertex vParticle2(vertex IN,
+				 uniform float4x4 modelViewMatrix,
+			     uniform float4 newColor,
+			     uniform float3 translation,
+				 uniform float4 rotationRow0,
+				 uniform float4 rotationRow1,
+				 uniform float4 rotationRow2,
+			     uniform float3 velocity,
+			     uniform float3 acceleration,
+				 uniform float t,
+				 uniform float3 emitterPos,
+				 uniform float3 particleCenter,
+				 uniform float3 vortexPosition0,
+				 uniform float3 vortexPosition1,
+				 uniform float3 vortexPosition2,
+				 uniform float numOfVorticies)
+{
+	vertex OUT;
+
+	float3 centerPos = translation;
+
+	if (numOfVorticies >= 1)
+	{
+		acceleration += -(emitterPos - vortexPosition0);
+	}
+	
+	if (numOfVorticies >= 2)
+	{
+		acceleration += -(emitterPos - vortexPosition1);
+	}
+	
+	if (numOfVorticies >= 3)
+	{
+		acceleration += -(emitterPos - vortexPosition2);
+	}
+
+	translation = emitterPos + velocity * t + 0.5 * acceleration * t * t;
+
+	if (numOfVorticies >= 1)
+	{
+		acceleration += -(translation - vortexPosition0);
+	}
+	
+	if (numOfVorticies >= 2)
+	{
+		acceleration += -(translation - vortexPosition1);
+	}
+	
+	if (numOfVorticies >= 3)
+	{
+		acceleration += -(translation - vortexPosition2);
+	}
+
+	translation = translation + velocity * t + 0.5 * acceleration * t * t;
+
+	OUT.position.xyz = IN.position.xyz + translation.xyz;
+	OUT.position.w = 1;
+	OUT.position = mul(modelViewMatrix, OUT.position);
+
+	OUT.color = newColor;
+	OUT.texCoord0 = IN.texCoord0;
+	OUT.texCoord1 = normalize(OUT.position - centerPos);
+	OUT.texCoord2 = OUT.position.xyz;
+	OUT.texCoord3 = IN.texCoord3;
+	OUT.texCoord4 = IN.texCoord4;
+
+	return OUT;
+}*/

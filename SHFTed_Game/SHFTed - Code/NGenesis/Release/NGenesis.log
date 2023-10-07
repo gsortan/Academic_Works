@@ -1,0 +1,86 @@
+﻿  AIstate.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Animation.cpp
+  animationPlayer.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Behaviour.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Bone.cpp
+  Camera.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Cg.cpp
+  Conversion.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(52,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(59,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(104,27): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(105,27): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(110,27): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(111,27): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(116,27): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(117,27): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(133,20): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(145,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(153,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Conversion.cpp(161,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Enemy.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  FBO.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Game.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Keyboard.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Level.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  main.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Matrix.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Matrix.cpp(84,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Matrix.cpp(85,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Matrix.cpp(93,19): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Matrix.cpp(94,19): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Matrix.cpp(102,19): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Matrix.cpp(103,19): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Misc.cpp
+  Model.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Parser.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Particle.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Character.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Compiling...
+  Path.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Path.cpp(7,15): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Path.cpp(112,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Path.cpp(117,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Path.cpp(122,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Quad.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Quaternion.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Quaternion.cpp(39,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Quaternion.cpp(40,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Quaternion.cpp(215,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Quaternion.cpp(216,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Quaternion.cpp(245,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Quaternion.cpp(246,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Shader.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Skeleton.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Skin.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Sound.cpp
+  Sprite.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Text.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Texture.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Timer.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  ToolsWindow.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Include\IL\ilut.h(131,10): fatal  error C1083: Cannot open include file: 'IL/config.h': No such file or directory
+  Vector3f.cpp
+C:\Users\User\Documents\Shfted\SHFTed_Game\SHFTed - Code\NGenesis\Vector3f.cpp(79,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data

@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NGenesis", "NGenesis\NGenesis.vcxproj", "{AAA16EA7-3D44-4498-8D26-1350483001A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAA16EA7-3D44-4498-8D26-1350483001A5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AAA16EA7-3D44-4498-8D26-1350483001A5}.Debug|Win32.Build.0 = Debug|Win32
+		{AAA16EA7-3D44-4498-8D26-1350483001A5}.Release|Win32.ActiveCfg = Release|Win32
+		{AAA16EA7-3D44-4498-8D26-1350483001A5}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

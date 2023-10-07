@@ -1,0 +1,428 @@
+//Slightly more complex shaders
+
+struct fragment //Fragment shader. Fragments store color only
+{
+	float4 color : COLOR;
+};
+
+fragment fNormalMap(fragment IN,
+					uniform sampler2D decal0 : TEX0, 
+				    float3 texCoord0 : TEXCOORD0,
+					float3 texCoord2 : TEXCOORD2,
+				   	
+				    uniform float3 globalAmbient, 
+				    uniform float3 lightColor, 
+				    uniform float3 lightPosition, 
+				    uniform float3 eyePosition,
+				    uniform float3 ke, 
+				    uniform float3 ka, 
+			        uniform float3 ks, 
+				    uniform float3 kd, 
+			        uniform float shininess)
+{
+	fragment OUT;
+
+	//float4 texColor = tex2D(decal0, texCoord0);
+
+	float3 P = texCoord2.xyz; //TexCoord1 is now position
+	float3 N = normalize(tex2D(decal0, texCoord0));
+
+	float3 emissive = ke;
+	float3 ambient = ka * globalAmbient;
+	float3 L = normalize(lightPosition - P);
+	float diffuseLight = max(dot(N, L), 0);
+	float3 diffuse = kd * lightColor * diffuseLight;
+	float3 V = normalize(eyePosition - P);
+	float3 H = normalize(L + V);
+	float specularLight = pow(max(dot(N, H), 0), shininess);
+
+	if (diffuseLight <= 0)
+	{
+		specularLight = 0;
+	}
+
+	float3 specular = ks * lightColor * specularLight;
+	OUT.color.xyz = emissive + ambient + diffuse + specular;
+	OUT.color.w = 1;
+	OUT.color *= IN.color;
+
+	return OUT;
+}
+
+fragment fToon(fragment IN,
+
+			   uniform sampler2D decal0 : TEX0,
+			   float3 texCoord0 : TEXCOORD0, 
+			   float3 texCoord1 : TEXCOORD1,
+			   float3 texCoord2 : TEXCOORD2,
+				
+			   //uniform float4x4 modelViewMatrix,
+
+			   uniform float3 globalAmbient, 
+			   uniform float3 lightColor, 
+			   uniform float3 lightPosition, 
+			   uniform float3 eyePosition,
+			   uniform float3 ke, 
+			   uniform float3 ka, 
+			   uniform float3 ks, 
+			   uniform float3 kd, 
+			   uniform float shininess)
+{
+	fragment OUT;
+
+	float3 P = texCoord2.xyz; //TexCoord2 is now position
+	float3 N = normalize(texCoord1); //TexCoord1 is now normals
+
+	float3 emissive = ke;
+	float3 ambient = ka * globalAmbient;
+	float3 L = normalize(lightPosition - P);
+	float diffuseLight = max(dot(N, L), 0); //Clamping it so it's between 0 and 1
+	float3 diffuse = kd * lightColor * diffuseLight;
+	//diffuse /= L * L; //Takes into account distance attenuation
+	float3 V = normalize(eyePosition - P);
+	float3 H = normalize(L + V);
+	float specularLight = pow(max(dot(N, H), 0), shininess);
+
+	if (diffuseLight <= 0)
+	{
+		specularLight = 0;
+	}
+
+	float3 specular = ks * lightColor * specularLight;
+	OUT.color.xyz = emissive + ambient + diffuse + specular;
+	OUT.color.w = 1;
+	OUT.color *= tex2D(decal0, texCoord0);
+
+	/*float edge = max(dot(N, V), 0);
+
+	if (edge <= 0.01) //Checks if edge
+	{
+		OUT.color.xyz = (0, 0, 0);
+	}
+	else //Hard coding the clamp lewl*/
+	{
+		if (OUT.color.x >= 0 && OUT.color.x <= 0.2)
+		{
+			OUT.color.x = 0.2;
+		}
+		else if (OUT.color.x > 0.2 && OUT.color.x <= 0.4)
+		{
+			OUT.color.x = 0.4;
+		}
+		else if (OUT.color.x > 0.4 && OUT.color.x <= 0.6)
+		{
+			OUT.color.x = 0.6;
+		}
+		else if (OUT.color.x > 0.6 && OUT.color.x <= 0.8)
+		{
+			OUT.color.x = 0.8;
+		}
+		else
+		{
+			OUT.color.x = 1.0;
+		}
+
+		if (OUT.color.y >= 0 && OUT.color.y <= 0.2)
+		{
+			OUT.color.y = 0.2;
+		}
+		else if (OUT.color.y > 0.2 && OUT.color.y <= 0.4)
+		{
+			OUT.color.y = 0.4;
+		}
+		else if (OUT.color.y > 0.4 && OUT.color.y <= 0.6)
+		{
+			OUT.color.y = 0.6;
+		}
+		else if (OUT.color.y > 0.6 && OUT.color.y <= 0.8)
+		{
+			OUT.color.y = 0.8;
+		}
+		else
+		{
+			OUT.color.y = 1.0;
+		}
+
+		if (OUT.color.z >= 0 && OUT.color.z <= 0.2)
+		{
+			OUT.color.z = 0.2;
+		}
+		else if (OUT.color.z > 0.2 && OUT.color.z <= 0.4)
+		{
+			OUT.color.z = 0.4;
+		}
+		else if (OUT.color.z > 0.4 && OUT.color.z <= 0.6)
+		{
+			OUT.color.z = 0.6;
+		}
+		else if (OUT.color.z > 0.6 && OUT.color.z <= 0.8)
+		{
+			OUT.color.z = 0.8;
+		}
+		else
+		{
+			OUT.color.z = 1.0;
+		}
+	}
+
+	return OUT;
+}
+
+fragment fToonNoLighting(fragment IN,
+
+			   uniform sampler2D decal0 : TEX0,
+			   float3 texCoord0 : TEXCOORD0, 
+			   float3 texCoord1 : TEXCOORD1,
+			   float3 texCoord2 : TEXCOORD2)
+{
+	fragment OUT;
+
+	OUT.color = tex2D(decal0, texCoord0);
+
+	/*float edge = max(dot(N, V), 0);
+
+	if (edge <= 0.01) //Checks if edge
+	{
+		OUT.color.xyz = (0, 0, 0);
+	}
+	else //Hard coding the clamp lewl*/
+	{
+		if (OUT.color.x >= 0 && OUT.color.x <= 0.2)
+		{
+			OUT.color.x = 0.2;
+		}
+		else if (OUT.color.x > 0.2 && OUT.color.x <= 0.4)
+		{
+			OUT.color.x = 0.4;
+		}
+		else if (OUT.color.x > 0.4 && OUT.color.x <= 0.6)
+		{
+			OUT.color.x = 0.6;
+		}
+		else if (OUT.color.x > 0.6 && OUT.color.x <= 0.8)
+		{
+			OUT.color.x = 0.8;
+		}
+		else
+		{
+			OUT.color.x = 1.0;
+		}
+
+		if (OUT.color.y >= 0 && OUT.color.y <= 0.2)
+		{
+			OUT.color.y = 0.2;
+		}
+		else if (OUT.color.y > 0.2 && OUT.color.y <= 0.4)
+		{
+			OUT.color.y = 0.4;
+		}
+		else if (OUT.color.y > 0.4 && OUT.color.y <= 0.6)
+		{
+			OUT.color.y = 0.6;
+		}
+		else if (OUT.color.y > 0.6 && OUT.color.y <= 0.8)
+		{
+			OUT.color.y = 0.8;
+		}
+		else
+		{
+			OUT.color.y = 1.0;
+		}
+
+		if (OUT.color.z >= 0 && OUT.color.z <= 0.2)
+		{
+			OUT.color.z = 0.2;
+		}
+		else if (OUT.color.z > 0.2 && OUT.color.z <= 0.4)
+		{
+			OUT.color.z = 0.4;
+		}
+		else if (OUT.color.z > 0.4 && OUT.color.z <= 0.6)
+		{
+			OUT.color.z = 0.6;
+		}
+		else if (OUT.color.z > 0.6 && OUT.color.z <= 0.8)
+		{
+			OUT.color.z = 0.8;
+		}
+		else
+		{
+			OUT.color.z = 1.0;
+		}
+	}
+
+	return OUT;
+}
+
+fragment fMultiLighting(fragment IN,
+
+						float3 texCoord0 : TEXCOORD0,
+						float3 texCoord1 : TEXCOORD1,
+						float3 texCoord2 : TEXCOORD2,
+
+						uniform sampler2D decal0 : TEX0,
+
+						uniform float3 globalAmbient, 
+
+						uniform float3 lightColor0, 
+						uniform float3 lightPosition0, 
+					    uniform float3 lightColor1, 
+					    uniform float3 lightPosition1, 
+					    uniform float3 lightColor2, 
+					    uniform float3 lightPosition2, 
+					    uniform float3 lightColor3, 
+					    uniform float3 lightPosition3, 
+ 
+ 					    uniform float numOfLights,
+					    
+					    uniform float3 eyePosition,
+					    uniform float3 ke, 
+					    uniform float3 ka, 
+					    uniform float3 ks, 
+					    uniform float3 kd, 
+					    uniform float shininess)
+{
+	fragment OUT;
+
+	OUT.color.xyz = (0, 0, 0);
+
+	float3 currentPos;
+	float3 currentColor;
+
+	for (int i = 0; i < numOfLights; ++i)
+	{
+		if (i == 0)
+		{
+			currentPos = lightPosition0;
+			currentColor = lightColor0;
+		}
+		else if (i == 1)
+		{
+			currentPos = lightPosition1;
+			currentColor = lightColor1;
+		}
+		else if (i == 2)
+		{
+			currentPos = lightPosition2;
+			currentColor = lightColor2;
+		}
+		else
+		{
+			currentPos = lightPosition3;
+			currentColor = lightColor3;
+		}
+
+		float3 P = texCoord2.xyz; //TexCoord1 is now position
+		float3 N = normalize(texCoord1); //TexCoord0 is now normals
+		
+		float3 L = normalize(currentPos - P);
+		float diffuseLight = max(dot(N, L), 0); //Clamping it so it's between 0 and 1
+		float3 diffuse = kd * currentColor * diffuseLight;
+		float3 V = normalize(eyePosition - P);
+		float3 H = normalize(L + V);
+		float specularLight = pow(max(dot(N, H), 0), shininess);
+
+		if (diffuseLight <= 0)
+		{
+			specularLight = 0;
+		}
+
+		float3 specular = ks * currentColor * specularLight;
+		
+		//OUT.color.xyz += (diffuse + specular) * (1 / distance(currentPos, P) / 0.1);
+		OUT.color.xyz += (diffuse + specular);
+	}
+
+	float3 emissive = ke;
+	float3 ambient = ka * globalAmbient;
+
+	OUT.color.xyz += emissive + ambient;
+
+	OUT.color.w = 1;
+	OUT.color *= tex2D(decal0, texCoord0);
+
+	return OUT;
+}
+
+/*fragment fMultiLighting(fragment IN,
+
+						float3 texCoord0 : TEXCOORD0,
+						float3 texCoord1 : TEXCOORD1,
+						float3 texCoord2 : TEXCOORD2,
+
+						uniform sampler2D decal0 : TEX0,
+
+						uniform float3 globalAmbient, 
+
+						uniform float3 lightPosition[],
+						uniform float3 lightColor[], 
+ 
+ 					    uniform float numOfLights,
+					    
+					    uniform float3 eyePosition,
+					    uniform float3 ke, 
+					    uniform float3 ka, 
+					    uniform float3 ks, 
+					    uniform float3 kd, 
+					    uniform float shininess)
+{
+	fragment OUT;
+
+	OUT.color.xyz = (0, 0, 0);
+
+	float3 currentPos;
+	float3 currentColor;
+
+	for (int i = 0; i < lightPosition.length; ++i)
+	{
+		currentPos = lightPosition[i];
+		currentColor = lightColor[i];
+
+		float3 P = texCoord2.xyz; //TexCoord1 is now position
+		float3 N = normalize(texCoord1); //TexCoord0 is now normals
+		
+		float3 L = normalize(currentPos - P);
+		float diffuseLight = max(dot(N, L), 0); //Clamping it so it's between 0 and 1
+		float3 diffuse = kd * currentColor * diffuseLight;
+		float3 V = normalize(eyePosition - P);
+		float3 H = normalize(L + V);
+		float specularLight = pow(max(dot(N, H), 0), shininess);
+
+		if (diffuseLight <= 0)
+		{
+			specularLight = 0;
+		}
+
+		float3 specular = ks * currentColor * specularLight;
+		
+		OUT.color.xyz += (diffuse + specular) * (1 / distance(currentPos, P) / 0.1);
+	}
+
+	float3 emissive = ke;
+	float3 ambient = ka * globalAmbient;
+
+	OUT.color.xyz += emissive + ambient;
+
+	OUT.color.w = 1;
+	OUT.color *= tex2D(decal0, texCoord0);
+
+	return OUT;
+}*/
+
+fragment fDepth(fragment IN,
+
+				float3 texCoord2 : TEXCOORD2,
+				uniform float3 eyePosition)
+{
+	fragment OUT;
+
+	float3 currentPos = texCoord2;
+	float distanceFromEye = distance(eyePosition, currentPos);
+
+	OUT.color.x = distanceFromEye / 500; //The 500 is hard coded to be the farplane
+	OUT.color.y = distanceFromEye / 500;
+	OUT.color.z = distanceFromEye / 500;
+	OUT.color.w = 1;
+
+	return OUT;
+}

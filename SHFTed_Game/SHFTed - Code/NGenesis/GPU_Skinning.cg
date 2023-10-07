@@ -1,0 +1,250 @@
+void skinMesh(float4 position : POSITION,
+              float2 texCoord : TEXCOORD0,
+              float4 weights : TEXCOORD1,	
+			  float4 jointIndices : TEXCOORD2,		 
+              float3 normal : NORMAL,				  
+
+			  uniform float4 rotationRow0,
+			  uniform float4 rotationRow1,
+			  uniform float4 rotationRow2,
+
+			  uniform float4x4 boneMatrices[62], 
+              uniform float4x4 modelViewMatrix,			 
+			  
+              out float4 oPosition : POSITION,
+			  out float2 otexCoord : TEXCOORD0,
+			  out float3 oNormalTexCoord : TEXCOORD1,
+			  out float3 oPositionTexCoord : TEXCOORD2,
+			  out float4 oColor : COLOR)
+{
+	float4 bonePosition = float4(0, 0, 0, 0);
+	float3 boneNormal = float3(0, 0, 0);
+	float4 netVertex = float4(0, 0, 0, 0);
+	float3 netNormal = float3(0, 0, 0);
+	float3x3 rotationMatrix;
+
+	if (weights.x!= -1 && jointIndices.x < 20000)
+	{
+		rotationMatrix = float3x3(boneMatrices[jointIndices.x]);
+
+		boneNormal = weights.x * mul(rotationMatrix, normal);
+		bonePosition = weights.x * mul(boneMatrices[jointIndices.x], position);
+
+		netVertex += bonePosition;
+		netNormal += boneNormal;
+	}
+
+	if (weights.y != -1 && jointIndices.y < 20000)
+	{
+		rotationMatrix = float3x3(boneMatrices[jointIndices.y]);
+
+		boneNormal = weights.y * mul(rotationMatrix, normal);
+		bonePosition = weights.y * mul(boneMatrices[jointIndices.y], position);
+
+		netVertex += bonePosition;
+		netNormal += boneNormal;
+	}
+
+
+	if (weights.z != -1 && jointIndices.z < 20000)
+	{
+		rotationMatrix = float3x3(boneMatrices[jointIndices.z]);
+
+		boneNormal = weights.z * mul(rotationMatrix, normal);
+		bonePosition = weights.z * mul(boneMatrices[jointIndices.z], position);
+
+		netVertex += bonePosition;
+		netNormal += boneNormal;
+	}
+
+	otexCoord = texCoord;
+
+	netVertex.w = 1;
+
+	float4 newPosition;
+
+	newPosition.x = rotationRow0.x * netVertex.x + rotationRow0.y * netVertex.y + rotationRow0.z * netVertex.z + rotationRow0.w * netVertex.w;
+	newPosition.y = rotationRow1.x * netVertex.x + rotationRow1.y * netVertex.y + rotationRow1.z * netVertex.z + rotationRow1.w * netVertex.w;
+	newPosition.z = rotationRow2.x * netVertex.x + rotationRow2.y * netVertex.y + rotationRow2.z * netVertex.z + rotationRow2.w * netVertex.w;
+	newPosition.w = 1;
+
+	oNormalTexCoord.x = rotationRow0.x * netNormal.x + rotationRow0.y * netNormal.y + rotationRow0.z * netNormal.z;
+	oNormalTexCoord.y = rotationRow1.x * netNormal.x + rotationRow1.y * netNormal.y + rotationRow1.z * netNormal.z;
+	oNormalTexCoord.z = rotationRow2.x * netNormal.x + rotationRow2.y * netNormal.y + rotationRow2.z * netNormal.z;
+
+	oColor.xyz = oNormalTexCoord;
+	oColor.w = 1;
+
+	oPositionTexCoord = newPosition.xyz;
+	//oPosition = mul(modelViewMatrix, newPosition);
+	textureMatrix = mul(textureMatrix, lightViewMatrix);
+	OUT.texCoord4 = mul(textureMatrix, IN.position);
+}
+
+void skinMeshWithLighting(float4 position : POSITION,
+						  float2 texCoord : TEXCOORD0,
+						  float4 weights : TEXCOORD1,	
+						  float4 jointIndices : TEXCOORD2,		 
+						  float3 normal : NORMAL,				  
+
+						  uniform float4 rotationRow0,
+			 			  uniform float4 rotationRow1,
+			 			  uniform float4 rotationRow2,
+
+			 			  uniform float4x4 boneMatrices[62], //Fucking hard coded value for number of bones...
+             			  uniform float4x4 modelViewMatrix,			 
+			  
+            			  out float4 oPosition : POSITION,
+						  out float2 otexCoord : TEXCOORD0,
+						  out float3 oNormalTexCoord : TEXCOORD1,
+						  out float3 oPositionTexCoord : TEXCOORD2,
+						  out float4 oColor : COLOR)
+{
+	float4 bonePosition = float4(0, 0, 0, 0);
+	float3 boneNormal = float3(0, 0, 0);
+	float4 netVertex = float4(0, 0, 0, 0);
+	float3 netNormal = float3(0, 0, 0);
+	float3x3 rotationMatrix;
+
+	if (weights.x!= -1 && jointIndices.x < 20000)
+	{
+		rotationMatrix = float3x3(boneMatrices[jointIndices.x]);
+
+		boneNormal = weights.x * mul(rotationMatrix, normal);
+		bonePosition = weights.x * mul(boneMatrices[jointIndices.x], position);
+
+		netVertex += bonePosition;
+		netNormal += boneNormal;
+	}
+
+	if (weights.y != -1 && jointIndices.y < 20000)
+	{
+		rotationMatrix = float3x3(boneMatrices[jointIndices.y]);
+
+		boneNormal = weights.y * mul(rotationMatrix, normal);
+		bonePosition = weights.y * mul(boneMatrices[jointIndices.y], position);
+
+		netVertex += bonePosition;
+		netNormal += boneNormal;
+	}
+
+
+	if (weights.z != -1 && jointIndices.z < 20000)
+	{
+		rotationMatrix = float3x3(boneMatrices[jointIndices.z]);
+
+		boneNormal = weights.z * mul(rotationMatrix, normal);
+		bonePosition = weights.z * mul(boneMatrices[jointIndices.z], position);
+
+		netVertex += bonePosition;
+		netNormal += boneNormal;
+	}
+
+	otexCoord = texCoord;
+
+	netVertex.w = 1;
+
+	float4 newPosition;
+
+	newPosition.x = rotationRow0.x * netVertex.x + rotationRow0.y * netVertex.y + rotationRow0.z * netVertex.z + rotationRow0.w * netVertex.w;
+	newPosition.y = rotationRow1.x * netVertex.x + rotationRow1.y * netVertex.y + rotationRow1.z * netVertex.z + rotationRow1.w * netVertex.w;
+	newPosition.z = rotationRow2.x * netVertex.x + rotationRow2.y * netVertex.y + rotationRow2.z * netVertex.z + rotationRow2.w * netVertex.w;
+	newPosition.w = 1;
+
+	oNormalTexCoord.x = rotationRow0.x * netNormal.x + rotationRow0.y * netNormal.y + rotationRow0.z * netNormal.z;
+	oNormalTexCoord.y = rotationRow1.x * netNormal.x + rotationRow1.y * netNormal.y + rotationRow1.z * netNormal.z;
+	oNormalTexCoord.z = rotationRow2.x * netNormal.x + rotationRow2.y * netNormal.y + rotationRow2.z * netNormal.z;
+
+	oColor.xyz = oNormalTexCoord;
+	oColor.w = 1;
+
+	oPositionTexCoord = newPosition.xyz;
+	oPosition = mul(modelViewMatrix, newPosition);
+}
+
+void skinMeshWithLightingAndShadows(float4 position : POSITION,
+								    float2 texCoord : TEXCOORD0,
+								    float4 weights : TEXCOORD1,	
+								    float4 jointIndices : TEXCOORD2,		 
+								    float3 normal : NORMAL,				  
+
+								    uniform float4 rotationRow0,
+			 					    uniform float4 rotationRow1,
+			 					    uniform float4 rotationRow2,
+
+			 					    uniform float4x4 boneMatrices[62], //Fucking hard coded value for number of bones...
+             					    uniform float4x4 modelViewMatrix,		
+									uniform float4x4 textureMatrix,
+									uniform float4x4 lightViewMatrix,	 
+			  
+            					    out float4 oPosition : POSITION,
+								    out float2 otexCoord : TEXCOORD0,
+								    out float3 oNormalTexCoord : TEXCOORD1,
+								    out float3 oPositionTexCoord : TEXCOORD2,
+									out float4 oShadowCoord : TEXCOORD4,
+								    out float4 oColor : COLOR)
+{
+	float4 bonePosition = float4(0, 0, 0, 0);
+	float3 boneNormal = float3(0, 0, 0);
+	float4 netVertex = float4(0, 0, 0, 0);
+	float3 netNormal = float3(0, 0, 0);
+	float3x3 rotationMatrix;
+
+	if (weights.x!= -1 && jointIndices.x < 20000)
+	{
+		rotationMatrix = float3x3(boneMatrices[jointIndices.x]);
+
+		boneNormal = weights.x * mul(rotationMatrix, normal);
+		bonePosition = weights.x * mul(boneMatrices[jointIndices.x], position);
+
+		netVertex += bonePosition;
+		netNormal += boneNormal;
+	}
+
+	if (weights.y != -1 && jointIndices.y < 20000)
+	{
+		rotationMatrix = float3x3(boneMatrices[jointIndices.y]);
+
+		boneNormal = weights.y * mul(rotationMatrix, normal);
+		bonePosition = weights.y * mul(boneMatrices[jointIndices.y], position);
+
+		netVertex += bonePosition;
+		netNormal += boneNormal;
+	}
+
+
+	if (weights.z != -1 && jointIndices.z < 20000)
+	{
+		rotationMatrix = float3x3(boneMatrices[jointIndices.z]);
+
+		boneNormal = weights.z * mul(rotationMatrix, normal);
+		bonePosition = weights.z * mul(boneMatrices[jointIndices.z], position);
+
+		netVertex += bonePosition;
+		netNormal += boneNormal;
+	}
+
+	otexCoord = texCoord;
+
+	netVertex.w = 1;
+
+	float4 newPosition;
+
+	newPosition.x = rotationRow0.x * netVertex.x + rotationRow0.y * netVertex.y + rotationRow0.z * netVertex.z + rotationRow0.w * netVertex.w;
+	newPosition.y = rotationRow1.x * netVertex.x + rotationRow1.y * netVertex.y + rotationRow1.z * netVertex.z + rotationRow1.w * netVertex.w;
+	newPosition.z = rotationRow2.x * netVertex.x + rotationRow2.y * netVertex.y + rotationRow2.z * netVertex.z + rotationRow2.w * netVertex.w;
+	newPosition.w = 1;
+
+	oNormalTexCoord.x = rotationRow0.x * netNormal.x + rotationRow0.y * netNormal.y + rotationRow0.z * netNormal.z;
+	oNormalTexCoord.y = rotationRow1.x * netNormal.x + rotationRow1.y * netNormal.y + rotationRow1.z * netNormal.z;
+	oNormalTexCoord.z = rotationRow2.x * netNormal.x + rotationRow2.y * netNormal.y + rotationRow2.z * netNormal.z;
+
+	oColor.xyz = oNormalTexCoord;
+	oColor.w = 1;
+
+	oPositionTexCoord = newPosition.xyz;
+	oPosition = mul(modelViewMatrix, newPosition);
+
+	textureMatrix = mul(textureMatrix, lightViewMatrix);
+	oShadowCoord = mul(textureMatrix, newPosition);
+}

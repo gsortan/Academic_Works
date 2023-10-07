@@ -1,0 +1,37 @@
+struct vInput
+{
+	float4 position		: POSITION;
+	float2 texCoord		: TEXCOORD0;
+	float3 normal		: NORMAL;
+};
+
+struct vOutput
+{
+	float4 position		: POSITION;
+	float2 texCoord		: TEXCOORD0;
+	float3 normal		: TEXCOORD1;
+	float3 objectPos	: TEXCOORD2;
+	float4 shadowCoord  : TEXCOORD4;
+};
+
+
+vOutput vShadow(vInput IN,
+				uniform float4x4 modelViewMatrix,
+				uniform float4x4 textureMatrix,
+				uniform float4x4 lightViewMatrix)
+{
+	vOutput OUT; 
+	OUT.position = mul(modelViewMatrix, IN.position); 
+	OUT.texCoord = IN.texCoord;
+	OUT.normal = IN.normal;
+	OUT.objectPos = IN.position.xyz;
+
+	textureMatrix = mul(textureMatrix, lightViewMatrix);
+	OUT.shadowCoord = mul(textureMatrix, IN.position);
+
+	return OUT;
+}
+
+
+ 
+
