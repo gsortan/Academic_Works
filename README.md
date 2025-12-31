@@ -1,3 +1,3 @@
 # Academic Works
 
-Gordon Tan
+This is a collection of various academic projects. 
